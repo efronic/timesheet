@@ -1,10 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { Timesheet } from '../models/timesheet';
-import { TimesheetForm } from '../models/timesheet-form.model';
-import { TimesheetItemForm } from '../models/timesheetItem-form.model';
-import { TimesheetItem } from '../models/TimesheetItem';
+import { Timesheet } from '../_models/timesheet';
+import { TimesheetForm } from '../_models/timesheet-form.model';
+import { TimesheetItemForm } from '../timesheetitem/_models/timesheetItem-form.model';
+import { TimesheetItem } from '../timesheetitem/_models/TimesheetItem';
 
 @Injectable()
 export class TimesheetFormService implements OnDestroy {
@@ -12,7 +12,7 @@ export class TimesheetFormService implements OnDestroy {
   private timesheetForm: BehaviorSubject<
     FormGroup | undefined
   > = new BehaviorSubject(this.fb.group(new TimesheetForm(new Timesheet())));
-  trForm$: Observable<FormGroup> = this.timesheetForm.asObservable();
+  tsForm$: Observable<FormGroup> = this.timesheetForm.asObservable();
 
   constructor(private fb: FormBuilder) {}
 

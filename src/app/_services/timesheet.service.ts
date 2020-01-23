@@ -3,12 +3,12 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, finalize } from 'rxjs/operators';
-import { Timesheet } from '../models/timesheet';
+import { Timesheet } from '../_models/timesheet';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TravelRequestService {
+export class TimesheetService {
   baseUrl = environment.apiUrl;
   editTimesheet: Timesheet;
   viewTimesheet: Timesheet;

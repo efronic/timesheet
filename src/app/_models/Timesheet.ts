@@ -1,4 +1,4 @@
-import { TimesheetItem } from './TimesheetItem';
+import { TimesheetItem } from '../timesheetitem/_models/TimesheetItem';
 
 export class Timesheet {
   id?: number;
