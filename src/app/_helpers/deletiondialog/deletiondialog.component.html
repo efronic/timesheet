@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{ data.headerMessage }}</h2>
+<div mat-dialog-content fxLayout fxLayout="column">
+  <p>{{ data.warningMessage }}</p>
+  <!-- <mat-form-field appearance="outline" fxFlex="1 1 auto">
+    <mat-label>Deletion comments</mat-label>
+    <mat-icon matPrefix>comment</mat-icon>
+    <textarea
+      matInput
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="10"
+      placeholder="Deletion comments"
+      [(ngModel)]="data.deletionComments"
+    >
+    </textarea>
+  </mat-form-field> -->
+</div>
+<div
+  mat-dialog-actions
+  fxLayout
+  fxLayout="row"
+  fxLayout.xs="row"
+  fxLayout.sm="row"
+  fxLayoutAlign="center start"
+  fxLayoutGap="10px"
+>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="data"
+  >
+    Yes
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onNoClick()"
+    cdkFocusInitial
+  >
+    No
+  </button>
+</div>

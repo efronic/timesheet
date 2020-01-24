@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Timesheet } from './_models/timesheet';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { MatSnackBar, MatDialog, MatSelectChange } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TimesheetService } from './_services/timesheet.service';
 import { TimesheetFormService } from './_services/timesheet-form.service';
@@ -22,16 +22,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   formsReady = false;
   buttonsReady = true;
-  showSubmitButton = true;
+  showSubmitButton = false;
   selectedType: string;
   TimesheetFormSub: Subscription;
   formInvalid = false;
   timesheetItems: FormArray;
 
   pageTitle: string;
-  
-  selectedAccountType: string;
-  selectedCurrency: string;
+
   title = 'Timesheet';
   constructor(
     private snackBar: MatSnackBar,
@@ -87,10 +85,27 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   addTimesheetItem() {
     this.timesheetFormService.addTimesheetItem();
+    this.childSelected();
   }
 
   deleteTimesheetItem(index: number) {
+    console.log('deleting item', index);
+
     this.timesheetFormService.deleteTimesheetItem(index);
+    this.childSelected();
+    this.openSnackBar('Item removed.', 'OK');
+  }
+  childSelected() {
+    if (
+      this.TimesheetForm.value.timesheetItems.filter(x => x.flSelected === true)
+        .length > 0
+    ) {
+      this.showSubmitButton = true;
+    } else {
+      this.showSubmitButton = false;
+    }
+    console.log('this.showsubmitbutton() ', this.showSubmitButton);
+    console.log('this.TimesheetForm.invalid ', this.TimesheetForm.invalid);
   }
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
@@ -103,62 +118,8 @@ export class AppComponent implements OnInit, OnDestroy {
     // this.router.navigate(['/home']);
   }
   submit() {
-    // console.log('Timesheet saved!');
-    console.log(this.TimesheetForm.getRawValue());
-    console.log('this.TimesheetForm.valid', this.TimesheetForm.valid);
-    if (this.TimesheetForm.valid) {
-      this.buttonsReady = false;
-      this.timesheet = Object.assign({}, this.TimesheetForm.getRawValue());
-
-      console.log('this.timesheet to pass to api: ', this.timesheet);
-      this.TimesheetForm.disable();
-      if (this.existingTimesheet) {
-        // existing timesheet
-        console.log('exisiting timesheet');
-
-        this.timesheetService.update(this.timesheet).subscribe(
-          () => {
-            console.log('updating this.timesheet: ', this.timesheet);
-            console.log('Successful update!');
-          },
-          error => {
-            this.buttonsReady = true;
-            console.error('Unsuccessful update..');
-            this.openSnackBar(error, 'Ok');
-          },
-          () => {
-            this.buttonsReady = true;
-            this.openSnackBar(
-              'Timesheet is successfully updated. Thank you!',
-              'Ok'
-            );
-            // this.router.navigate(['/home']);
-          }
-        );
-      } else {
-        this.timesheetService.add(this.timesheet).subscribe(
-          () => {
-            // console.log(this.timesheet);
-            console.log('Successful insert!');
-          },
-          error => {
-            this.buttonsReady = true;
-            console.error('Unsuccessful insert..');
-            this.openSnackBar(error, 'Ok');
-          },
-          () => {
-            this.buttonsReady = true;
-            this.timesheetFormService.ngOnDestroy();
-
-            this.openSnackBar(
-              'Your timesheet was successfully submitted. Thank you!',
-              'Ok'
-            );
-            // this.router.navigate(['/home']);
-          }
-        );
-      }
-    }
+    this.submitted = !this.submitted;
+    this.openSnackBar('Selected items are submitted.', 'OK');
     console.log(this.TimesheetForm.value);
   }
 }

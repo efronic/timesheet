@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TimesheetFormService } from './_services/timesheet-form.service';
 import { TimesheetService } from './_services/timesheet.service';
+import { DeletiondialogComponent } from './_helpers/deletiondialog/deletiondialog.component';
 
 @NgModule({
   imports: [
@@ -24,9 +25,12 @@ import { TimesheetService } from './_services/timesheet.service';
     FlexLayoutModule,
     ReactiveFormsModule
   ],
-  declarations: [AppComponent, TimesheetitemComponent],
+  declarations: [AppComponent, TimesheetitemComponent, DeletiondialogComponent],
 
   providers: [TimesheetFormService, TimesheetService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DeletiondialogComponent
+  ]
 })
 export class AppModule {}

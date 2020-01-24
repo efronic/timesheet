@@ -3,7 +3,7 @@
     fxFlex.xs="100%"
     fxFlex.md="100%"
     fxFlex.sm="100%"
-    fxFlex="45"
+    fxFlex="100"
     fxLayoutGap="10px"
     class="mat-elevation-z4"
   >
@@ -45,15 +45,17 @@
             >&nbsp;&nbsp;New
           </mat-toolbar>
         </div>
-        <div
-          *ngFor="let item of timesheetItems?.controls.reverse(); let i = index"
-        >
+        <div *ngFor="let item of timesheetItems?.controls; let i = index">
           <app-timesheetitem
             [index]="i"
             [submitted]="this.submitted"
+            [defaultHourlyRate]="
+              this.TimesheetForm.controls.defaultHourlyRate.value
+            "
             [viewMode]="this.viewMode"
             [TimesheetItemForm]="item"
-            (deleteCPAC)="deleteTimesheetItem($event)"
+            (deleteTimesheetItem)="deleteTimesheetItem($event)"
+            (childSelected)="childSelected($event)"
           ></app-timesheetitem>
         </div>
         <div
@@ -83,13 +85,13 @@
     <mat-card-actions
       ><div fxLayoutAlign="center center">
         <button
-          *ngIf="this.showSubmitButton && this.viewMode != 'Details'"
           type="submit"
+          *ngIf="this.showSubmitButton"
           mat-raised-button
           color="primary"
           fxLayoutAlign="center center"
           (click)="submit()"
-          [disabled]="TimesheetForm.invalid"
+          [disabled]="this.TimesheetForm.invalid"
         >
           Submit
         </button>
@@ -107,5 +109,5 @@
     </mat-card-actions>
   </mat-card>
 </section>
-<p>Form Value: {{ TimesheetForm.value | json }}</p>
-<p>Form Status: {{ TimesheetForm.status | json }}</p>
+<!-- <p>Form Value: {{ TimesheetForm.value | json }}</p>
+<p>Form Status: {{ TimesheetForm.status | json }}</p> -->

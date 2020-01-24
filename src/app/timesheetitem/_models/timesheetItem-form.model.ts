@@ -9,6 +9,7 @@ export class TimesheetItemForm {
   type = new FormControl();
   duration = new FormControl();
   hourlyRate = new FormControl();
+  flSelected = new FormControl();
   total = new FormControl();
   date = new FormControl();
 
@@ -16,17 +17,17 @@ export class TimesheetItemForm {
     this.id.setValue(timesheetItem.id);
     this.timesheetId.setValue(timesheetItem.timesheetId);
     this.state.setValue(timesheetItem.state);
-    this.state.setValidators([Validators.required]);
-
+    // this.state.setValidators([Validators.required]);
+    this.flSelected.setValue(timesheetItem.flSelected);
     this.title.setValue(timesheetItem.title);
-    this.title.setValidators([Validators.required]);
+    // this.title.setValidators([Validators.required]);
 
     this.type.setValue(timesheetItem.type);
 
     this.hourlyRate.setValue(timesheetItem.hourlyRate);
 
     this.total.setValue(timesheetItem.total);
-    this.total.setValidators([Validators.required]);
+    // this.total.setValidators([Validators.required]);
 
     this.date.setValue(timesheetItem.date);
   }

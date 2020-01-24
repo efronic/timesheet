@@ -10,8 +10,10 @@ export class TimesheetItem {
   hourlyRate: number;
   total: number;
   date: Date;
+  flSelected: boolean;
   constructor(
     id?: number,
+    flSelected?: boolean,
     timesheetId?: number,
     title?: string,
     hourlyRate?: number,
@@ -22,6 +24,7 @@ export class TimesheetItem {
     state?: string
   ) {
     this.id = id;
+    this.flSelected = flSelected;
     this.timesheetId = timesheetId;
     this.title = title;
     this.hourlyRate = hourlyRate;

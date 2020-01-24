@@ -4,15 +4,20 @@
     <mat-card-content
       ><form [formGroup]="TimesheetItemForm">
         <div fxLayout="row" fxLayoutAlign="center" fxLayoutAlign="space-around">
-          <section
-            fxLayout
-            fxLayoutAlign="center"
-            fxFlex="90"
-            fxLayout="column"
-          >
+          <section fxLayout fxLayoutAlign="center" fxFlex="90" fxLayout="row">
+            <section class="checkbox-section">
+              <mat-checkbox
+                fxLayout
+                fxLayoutAlign="center center"
+                formControlName="flSelected"
+                [checked]="this.flItemChecked"
+                (change)="flSelectedChange($event)"
+              ></mat-checkbox>
+            </section>
+
             <mat-form-field appearance="outline">
               <mat-label>State</mat-label>
-              <mat-icon matPrefix>star</mat-icon>
+              <mat-icon matPrefix>outlined_flag</mat-icon>
               <mat-select
                 [(value)]="selectedState"
                 formControlName="state"
@@ -22,7 +27,8 @@
                   {{ s.name }}
                 </mat-option>
               </mat-select>
-              <div *ngIf="this.submitted && !!f.state.errors">
+              <!-- <div *ngIf="this.submitted && !!f.state.errors"> -->
+              <div *ngIf="!!f.state.errors">
                 <div *ngIf="!!f.state.errors.required" style="color: red;">
                   State is required
                 </div>
@@ -33,20 +39,39 @@
               <input
                 matInput
                 readonly="true"
-                [matDatepicker]="pickerDeparture"
+                [matDatepicker]="datePicker"
                 placeholder="Date"
                 formControlName="date"
               />
               <mat-datepicker-toggle
+                *ngIf="!this.flItemSaved"
                 matSuffix
-                [for]="pickerDeparture"
+                [for]="datePicker"
               ></mat-datepicker-toggle>
-              <mat-datepicker touchUi #pickerDeparture></mat-datepicker>
+              <!-- <mat-datepicker touchUi #datePicker></mat-datepicker> for touch based devices -->
+              <mat-datepicker #datePicker></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Title</mat-label>
               <mat-icon matPrefix>title</mat-icon>
-              <input matInput placeholder="Title" formControlName="title" />
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="10"
+                placeholder="Title"
+                formControlName="title"
+              >
+              </textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Type</mat-label>
+              <mat-icon matPrefix>format_list_bulleted</mat-icon>
+              <mat-select formControlName="type" placeholder="Type">
+                <mat-option *ngFor="let t of types" [value]="t.value">
+                  {{ t.name }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Duration</mat-label>
@@ -83,17 +108,58 @@
               />
             </mat-form-field>
           </section>
-          <div id="btnRemoveTimesheetItem" fxFlex="5">
+          <div
+            id="btnRemoveTimesheetItem"
+            fxFlex="7"
+            fxLayoutAlign="space-between"
+          >
             <button
               class="mat-elevation-z1"
               id="removeButton"
-              *ngIf="this.viewMode != 'Details'"
+              *ngIf="
+                !this.flItemSaved &&
+                !this.flItemSubmitted &&
+                !f.duration.errors
+              "
+              (click)="save()"
+              mat-mini-fab
+              color="primary"
+              matTooltip="Save"
+            >
+              <mat-icon>done</mat-icon>
+            </button>
+            <button
+              class="mat-elevation-z1"
+              id="removeButton"
+              *ngIf="this.flItemSubmitted || this.flItemSaved"
+              (click)="update()"
+              mat-mini-fab
+              color="primary"
+              matTooltip="Edit"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              *ngIf="!this.flItemSubmitted"
+              class="mat-elevation-z1"
+              id="removeButton"
+              (click)="cancel()"
+              mat-mini-fab
+              color="accent"
+              matTooltip="Cancel"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+            <button
+              *ngIf="this.flItemSubmitted"
+              class="mat-elevation-z1"
+              id="removeButton"
               (click)="delete()"
               mat-mini-fab
               color="accent"
-              matTooltip="Delete this item"
+              matTooltip="Delete"
             >
-              <mat-icon>close</mat-icon>
+              <mat-icon>remove</mat-icon>
             </button>
           </div>
         </div>
