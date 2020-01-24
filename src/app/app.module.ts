@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,10 +27,12 @@ import { DeletiondialogComponent } from './_helpers/deletiondialog/deletiondialo
   ],
   declarations: [AppComponent, TimesheetitemComponent, DeletiondialogComponent],
 
-  providers: [TimesheetFormService, TimesheetService],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'en-AU' },
+    TimesheetFormService,
+    TimesheetService
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    DeletiondialogComponent
-  ]
+  entryComponents: [DeletiondialogComponent]
 })
 export class AppModule {}
