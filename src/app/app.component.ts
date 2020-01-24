@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Timesheet } from './_models/timesheet';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { ReversePipe } from 'ngx-pipes';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TimesheetService } from './_services/timesheet.service';
@@ -10,7 +11,8 @@ import { TimesheetFormService } from './_services/timesheet-form.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [ReversePipe]
 })
 export class AppComponent implements OnInit, OnDestroy {
   timesheet: Timesheet;

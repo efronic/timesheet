@@ -43,8 +43,8 @@ export class TimesheetFormService implements OnDestroy {
     const currentTimesheetItems = currentTimesheet.get(
       'timesheetItems'
     ) as FormArray;
-
-    currentTimesheetItems.removeAt(i);
+    const len = currentTimesheetItems.length;
+    currentTimesheetItems.removeAt(len - i - 1);
 
     this.timesheetForm.next(currentTimesheet);
   }

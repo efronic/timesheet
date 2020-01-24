@@ -45,7 +45,12 @@
             >&nbsp;&nbsp;New
           </mat-toolbar>
         </div>
-        <div *ngFor="let item of timesheetItems?.controls; let i = index">
+        <div
+          *ngFor="
+            let item of timesheetItems?.controls.slice() | reverse;
+            let i = index
+          "
+        >
           <app-timesheetitem
             [index]="i"
             [submitted]="this.submitted"

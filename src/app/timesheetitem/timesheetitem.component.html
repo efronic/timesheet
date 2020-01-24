@@ -3,8 +3,21 @@
     <!-- <mat-card-title fxLayout="row"><div fxFlex="40"></div> </mat-card-title> -->
     <mat-card-content
       ><form [formGroup]="TimesheetItemForm">
-        <div fxLayout="row" fxLayoutAlign="center" fxLayoutAlign="space-around">
-          <section fxLayout fxLayoutAlign="center" fxFlex="90" fxLayout="row">
+        <div
+          fxLayout="row"
+          fxLayout.xs="column"
+          fxLayout.md="column"
+          fxLayoutAlign="center"
+          fxLayoutAlign="space-around"
+        >
+          <section
+            fxLayout
+            fxLayout="row"
+            fxLayout.xs="column"
+            fxLayout.md="column"
+            fxLayoutAlign="center"
+            fxFlex="90"
+          >
             <section class="checkbox-section">
               <mat-checkbox
                 fxLayout
@@ -117,9 +130,7 @@
               class="mat-elevation-z1"
               id="removeButton"
               *ngIf="
-                !this.flItemSaved &&
-                !this.flItemSubmitted &&
-                !f.duration.errors
+                !this.flItemSaved && !this.flItemSubmitted && !f.duration.errors
               "
               (click)="save()"
               mat-mini-fab

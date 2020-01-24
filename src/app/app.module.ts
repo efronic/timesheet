@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { NgPipesModule } from 'ngx-pipes';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +18,7 @@ import { DeletiondialogComponent } from './_helpers/deletiondialog/deletiondialo
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-
+    NgPipesModule,
     AppRoutingModule,
     MaterialModule,
     FormsModule,
